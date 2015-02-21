@@ -6,7 +6,9 @@ import android.annotation.TargetApi;
 
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -25,6 +27,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.Intent;
+
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -43,6 +47,8 @@ import java.util.List;
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
 public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
+
+
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -177,6 +183,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
+
         return email.contains("@");
     }
 
@@ -238,6 +245,12 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 revokeAccess();
             }
         });
+
+        /*This Intent needs to be on swtich*/
+        //Intent i = new Intent(LoginActivity.this, MainActivity.class);
+       // startActivity(i);
+
+
     }
 
     @Override
@@ -374,6 +387,11 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             showProgress(false);
 
             if (success) {
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
+
+
+
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

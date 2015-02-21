@@ -1,9 +1,7 @@
 package com.project.clip;
 
-import android.net.Uri;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,15 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
 
-public class MainActivity extends ActionBarActivity
-
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks
-
-    {
+public class EducationActivity extends ActionBarActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -34,16 +27,10 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_education);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -53,47 +40,30 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
-
-        /*WebView Declaration - Used For a Stock Ticker*/
-
-        WebView stockTickerWebView = (WebView) findViewById(R.id.stockTicker_WebView);
-        WebSettings stockTickerSettings =stockTickerWebView.getSettings();
-
-        stockTickerSettings.setJavaScriptEnabled(true);
-                stockTickerWebView.loadUrl("https://www.google.com/");
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
 
-       // FragmentManager fragmentManager = getSupportFragmentManager();
-       // FinanceFragment financeFragment = new FinanceFragment();
-       // Bundle args = new Bundle();
-       // financeFragment.setArguments(args);
-        //Enter code to choose fragment based on position
-       // FragmentTransaction  fragmentTransaction = fragmentManager.beginTransaction();
 
 
-       //        fragmentTransaction.replace(R.id.financeFragment, financeFragment)
-       //         .commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .commit();
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = "Home";
-            case 2:
                 mTitle = getString(R.string.title_section1);
                 break;
-            case 3:
+            case 2:
                 mTitle = getString(R.string.title_section2);
                 break;
-            case 4:
+            case 3:
                 mTitle = getString(R.string.title_section3);
-            case 5:
-                mTitle = "Health";
                 break;
         }
     }
@@ -108,14 +78,12 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+            getMenuInflater().inflate(R.menu.education, menu);
             restoreActionBar();
-
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -127,8 +95,6 @@ public class MainActivity extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -166,28 +132,16 @@ public class MainActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-
+            View rootView = inflater.inflate(R.layout.fragment_education, container, false);
             return rootView;
         }
-
-
-
 
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
+            ((EducationActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
-
-
 
 }
