@@ -41,14 +41,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project.clip.LoginActivity" />
         </activity>
-        <activity
-            android:name=".EducationActivity"
-            android:label="@string/title_activity_education"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.clip.MainActivity" />
-        </activity>
     </application>
 
 </manifest>

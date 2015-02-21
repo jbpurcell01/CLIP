@@ -1,26 +1,24 @@
 package com.project.clip;
 
-import android.net.Uri;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
 
 public class MainActivity extends ActionBarActivity
 
         implements NavigationDrawerFragment.NavigationDrawerCallbacks
+
 
     {
 
@@ -55,29 +53,84 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
 
+
+
+
         /*WebView Declaration - Used For a Stock Ticker*/
 
-        WebView stockTickerWebView = (WebView) findViewById(R.id.stockTicker_WebView);
-        WebSettings stockTickerSettings =stockTickerWebView.getSettings();
+       // WebView stockTickerWebView = (WebView) findViewById(R.id.stockTicker_WebView);
+       // WebSettings stockTickerSettings =stockTickerWebView.getSettings();
 
-        stockTickerSettings.setJavaScriptEnabled(true);
-                stockTickerWebView.loadUrl("https://www.google.com/");
+        //stockTickerSettings.setJavaScriptEnabled(true);
+         //       stockTickerWebView.loadUrl("https://www.google.com/");
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
 
-       // FragmentManager fragmentManager = getSupportFragmentManager();
-       // FinanceFragment financeFragment = new FinanceFragment();
-       // Bundle args = new Bundle();
-       // financeFragment.setArguments(args);
-        //Enter code to choose fragment based on position
-       // FragmentTransaction  fragmentTransaction = fragmentManager.beginTransaction();
+        android.support.v4.app.Fragment fragment = null;
 
 
-       //        fragmentTransaction.replace(R.id.financeFragment, financeFragment)
-       //         .commit();
+        switch(position){
+
+            case 0:
+                fragment = new HomeFragment();
+                mTitle = getString(R.string.nav_drawer_home);
+                break;
+            case 1:
+                fragment = new EducationFragment();
+                mTitle = getString(R.string.nav_drawer_education);
+                break;
+
+            case 2:
+                fragment = new FinanceFragment();
+                mTitle = getString(R.string.nav_drawer_finance);
+                break;
+
+            case 3:
+                fragment = new CareerFragment();
+                mTitle = getString(R.string.nav_drawer_career);
+                break;
+
+            case 4:
+                fragment = new HealthFragment();
+                mTitle = getString(R.string.nav_drawer_health);
+                break;
+
+            default:
+                break;
+        }
+
+
+
+
+
+        if (fragment!= null) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment)
+                //TODO: Add all to back stack, or only home?
+                .addToBackStack(null)
+                .commit();
+
+
+        // update selected item and title, then close the drawer
+       // mDrawerList.setItemChecked(position, true);
+        //mDrawerList.setSelection(position);
+        //setTitle(navMenuTitles[position]);
+        //mDrawerLayout.closeDrawer(mDrawerList);
+    } else {
+            // error in creating fragment
+            Log.e("MainActivity", "Error in creating fragment");
+
+
+            // Fragment newFragment = new NavigationDrawerFragment();
+            //FragmentManager fragmentManager = getSupportFragmentManager();
+            //fragmentManager.beginTransaction().replace(R.id.fragment,newFragment)
+            //.addToBackStack(null)
+            //.commit();
+        }
     }
 
     public void onSectionAttached(int number) {
@@ -181,10 +234,6 @@ public class MainActivity extends ActionBarActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
-    }
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
 
 
